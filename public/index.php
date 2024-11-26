@@ -42,6 +42,8 @@ switch ($routeInfo[0]) {
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
         $controller = new $handler[0];
+        // $engine=new Engine;
+        // $pdo=new PDO;
         call_user_func([$controller, $handler[1]], $vars);
         break;
 }

@@ -8,7 +8,8 @@
     "delight-im/auth": "^8.3",
     "eoghanobrien/php-simple-mail": "^1.7",
     "fakerphp/faker": "^1.24",
-    "jasongrimes/paginator": "^1.0"
+    "jasongrimes/paginator": "^1.0",
+    "php-di/php-di": "^7.0"
   },
   "autoload": {
     "psr-4": {

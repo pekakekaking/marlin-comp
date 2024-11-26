@@ -17,9 +17,10 @@ class HomeController
     private $templates;
     private $auth;
 
-    public function __construct()
+    public function __construct(Engine $engine,PDO $pdo)
     {
-        $this->templates = new Engine('../app/views');
+//        $this->templates = new Engine('../app/views');
+        $this->templates = $engine;
         $db=new PDO("mysql:host=127.0.0.1;dbname=marlin","marlin","marlin");
         $this->auth=new \Delight\Auth\Auth($db);
     }
