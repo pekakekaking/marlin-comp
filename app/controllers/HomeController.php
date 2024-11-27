@@ -17,20 +17,18 @@ class HomeController
     private $templates;
     private $auth;
 
-    public function __construct(Engine $engine,PDO $pdo)
+    public function __construct()
     {
-//        $this->templates = new Engine('../app/views');
-        $this->templates = $engine;
+        $this->templates = new Engine('../app/views');
         $db=new PDO("mysql:host=127.0.0.1;dbname=marlin","marlin","marlin");
         $this->auth=new \Delight\Auth\Auth($db);
     }
 
     public function index($vars)
     {
-        d($this->auth->getRoles());die;
         $db = new QueryBuilder();
         $users = $db->getAll('users');
-        echo $this->templates->render('homepage', ['users' => $users]);
+        echo $this->templates->render('page_register', ['users' => $users]);
     }
 
     public function about()
