@@ -9,6 +9,7 @@ require "../vendor/autoload.php";
 
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
+    $r->addRoute('POST', '/createUser', ['App\controllers\UserController', 'store']);
     $r->addRoute('GET', '/home', ['App\controllers\HomeController', 'index']);
     $r->addRoute('GET', '/about', ['App\controllers\HomeController', 'about']);
     $r->addRoute('GET', '/verification', ['App\controllers\HomeController', 'emailVerification']);
