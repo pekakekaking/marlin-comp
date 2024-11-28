@@ -16,10 +16,43 @@ use PDO;
 class UserController
 {
     private $auth;
+    private $templates;
     public function __construct()
     {
+        $this->templates = new Engine('../app/views');
         $db=new PDO("mysql:host=127.0.0.1;dbname=marlin","marlin","marlin");
         $this->auth=new \Delight\Auth\Auth($db);
+    }
+    public function login()
+    {
+        try {
+            $this->auth->login($_POST['email'], $_POST['password']);
+            $qb=new QueryBuilder;
+            $users=$qb->getAll('users');
+
+            echo 'User is logged in';
+            echo $this->templates->render('users', ['users' => $users]);
+        }
+        catch (\Delight\Auth\InvalidEmailException $e) {
+            flash()->error('Wrong email address');
+            header('Location: /login');
+            die();
+        }
+        catch (\Delight\Auth\InvalidPasswordException $e) {
+            flash()->error('Wrong password');
+            header('Location: /login');
+            die();
+        }
+        catch (\Delight\Auth\EmailNotVerifiedException $e) {
+            flash()->error('Email not verified');
+            header('Location: /login');
+            die();
+        }
+        catch (\Delight\Auth\TooManyRequestsException $e) {
+            flash()->error('Too many requests');
+            header('Location: /login');
+            die();
+        }
     }
     public function store()
     {
@@ -31,6 +64,7 @@ class UserController
                 echo 'Send ' . $selector . ' and ' . $token . ' to the user (e.g. via email)';
                 echo '  For emails, consider using the mail(...) function, Symfony Mailer, Swiftmailer, PHPMailer, etc.';
                 echo '  For SMS, consider using a third-party service and a compatible SDK';
+                $this->auth->confirmEmail($selector, $token);
             });
 
             echo 'We have signed up a new user with the ID ' . $userId;
