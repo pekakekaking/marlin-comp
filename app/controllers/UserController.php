@@ -15,13 +15,17 @@ use PDO;
 
 class UserController
 {
-    private $auth;
-    private $templates;
+    protected $auth;
+    protected $templates;
     public function __construct()
     {
         $this->templates = new Engine('../app/views');
         $db=new PDO("mysql:host=127.0.0.1;dbname=marlin","marlin","marlin");
         $this->auth=new \Delight\Auth\Auth($db);
+    }
+    public function showLogin()
+    {
+        echo $this->templates->render('page_login');
     }
     public function login()
     {
@@ -29,8 +33,8 @@ class UserController
             $this->auth->login($_POST['email'], $_POST['password']);
             $qb=new QueryBuilder;
             $users=$qb->getAll('users');
-
-            echo 'User is logged in';
+//
+//            echo 'User is logged in';
             echo $this->templates->render('users', ['users' => $users]);
         }
         catch (\Delight\Auth\InvalidEmailException $e) {
@@ -65,6 +69,9 @@ class UserController
                 echo '  For emails, consider using the mail(...) function, Symfony Mailer, Swiftmailer, PHPMailer, etc.';
                 echo '  For SMS, consider using a third-party service and a compatible SDK';
                 $this->auth->confirmEmail($selector, $token);
+                header('Location: /show_login');
+                die();
+
             });
 
             echo 'We have signed up a new user with the ID ' . $userId;

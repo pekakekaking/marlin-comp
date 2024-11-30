@@ -9,12 +9,15 @@ require "../vendor/autoload.php";
 
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-    $r->addRoute('POST', '/createUser', ['App\controllers\UserController', 'store']);
+    $r->addRoute('POST', '/createUser', ['App\controllers\AdminUserController', 'store']);
     $r->addRoute('GET', '/home', ['App\controllers\HomeController', 'index']);
-    $r->addRoute('GET', '/login', ['App\controllers\UserController', 'login']);
+    $r->addRoute('GET', '/show_login', ['App\controllers\AdminUserController', 'showLogin']);
+    $r->addRoute('POST', '/login', ['App\controllers\AdminUserController', 'login']);
+    $r->addRoute('GET', '/create_user', ['App\controllers\AdminUserController', 'createUser']);
+
+
     $r->addRoute('GET', '/about', ['App\controllers\HomeController', 'about']);
     $r->addRoute('GET', '/verification', ['App\controllers\HomeController', 'emailVerification']);
-    $r->addRoute('GET', '/login', ['App\controllers\HomeController', 'login']);
     // {id} must be a number (\d+)
     $r->addRoute('GET', '/user/{id:\d+}', ['App\controllers\HomeController', 'index']);
     // The /{title} suffix is optional
