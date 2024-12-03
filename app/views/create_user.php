@@ -46,7 +46,7 @@
 
 
     </div>
-    <form action="/storeUser" method="POST">
+    <form action="/store_user" method="POST">
         <div class="row">
             <div class="col-xl-6">
                 <div id="panel-1" class="panel">
@@ -70,7 +70,7 @@
                             <!-- tel -->
                             <div class="form-group">
                                 <label class="form-label" for="simpleinput">Номер телефона</label>
-                                <input type="text" id="simpleinput3" name="phone" class="form-control">
+                                <input type="text" id="simpleinput3" name="phone_number" class="form-control">
                             </div>
 
                             <!-- address -->
@@ -106,7 +106,7 @@
                             <!-- status -->
                             <div class="form-group">
                                 <label class="form-label" for="example-select">Выберите статус</label>
-                                <select class="form-control" name="status" id="example-select">
+                                <select class="form-control" id="example-select" name="status">
                                     <option value="1">Онлайн</option>
                                     <option value="2">Отошел</option>
                                     <option value="3">Не беспокоить</option>
@@ -142,7 +142,7 @@
                                                     </span>
                                                 </span>
                                         </div>
-                                        <input type="text" class="form-control border-left-0 bg-transparent pl-0" name="vk">
+                                        <input type="text" name="vk" class="form-control border-left-0 bg-transparent pl-0">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -156,7 +156,7 @@
                                                     </span>
                                                 </span>
                                         </div>
-                                        <input type="text" class="form-control border-left-0 bg-transparent pl-0" name="telegram">
+                                        <input type="text" name="telegram" class="form-control border-left-0 bg-transparent pl-0">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -170,7 +170,7 @@
                                                     </span>
                                                 </span>
                                         </div>
-                                        <input type="text" class="form-control border-left-0 bg-transparent pl-0" name="instagram">
+                                        <input type="text" name="instagram" class="form-control border-left-0 bg-transparent pl-0">
                                     </div>
                                 </div>
                                 <div class="col-md-12 mt-3 d-flex flex-row-reverse">

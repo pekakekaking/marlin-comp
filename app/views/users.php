@@ -60,7 +60,7 @@
                                 <i class="fal fa-angle-down d-inline-block ml-1 fs-md"></i>
                             </a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="edit.html">
+                                <a class="dropdown-item" href="/edit?id=1">
                                     <i class="fa fa-edit"></i>
                                     Редактировать</a>
                                 <a class="dropdown-item" href="security.html">
