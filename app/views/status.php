@@ -6,11 +6,11 @@
     <meta name="description" content="Chartist.html">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
-    <link id="vendorsbundle" rel="stylesheet" media="screen, print" href="css/vendors.bundle.css">
-    <link id="appbundle" rel="stylesheet" media="screen, print" href="css/app.bundle.css">
-    <link id="myskin" rel="stylesheet" media="screen, print" href="css/skins/skin-master.css">
-    <link rel="stylesheet" media="screen, print" href="css/fa-solid.css">
-    <link rel="stylesheet" media="screen, print" href="css/fa-brands.css">
+    <link id="vendorsbundle" rel="stylesheet" media="screen, print" href="../../css/vendors.bundle.css">
+    <link id="appbundle" rel="stylesheet" media="screen, print" href="../../css/app.bundle.css">
+    <link id="myskin" rel="stylesheet" media="screen, print" href="../../css/skins/skin-master.css">
+    <link rel="stylesheet" media="screen, print" href="../../css/fa-solid.css">
+    <link rel="stylesheet" media="screen, print" href="../../css/fa-brands.css">
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary bg-primary-gradient">
@@ -34,42 +34,46 @@
     <main id="js-page-content" role="main" class="page-content mt-3">
         <div class="subheader">
             <h1 class="subheader-title">
-                <i class='subheader-icon fal fa-image'></i> Загрузить аватар
+                <i class='subheader-icon fal fa-sun'></i> Установить статус
             </h1>
 
         </div>
-        <form action="">
+        <form action="/update_status?id=<?php echo $user['id']?>" method="POST">
             <div class="row">
                 <div class="col-xl-6">
                     <div id="panel-1" class="panel">
                         <div class="panel-container">
                             <div class="panel-hdr">
-                                <h2>Текущий аватар</h2>
+                                <h2>Установка текущего статуса</h2>
                             </div>
                             <div class="panel-content">
-                                <div class="form-group">
-                                    <img src="img/demo/authors/josh.png" alt="" class="img-responsive" width="200">
-                                </div>
-
-                                <div class="form-group">
-                                    <label class="form-label" for="example-fileinput">Выберите аватар</label>
-                                    <input type="file" id="example-fileinput" class="form-control-file">
-                                </div>
-
-
-                                <div class="col-md-12 mt-3 d-flex flex-row-reverse">
-                                    <button class="btn btn-warning">Загрузить</button>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <!-- status -->
+                                        <div class="form-group">
+                                            <label class="form-label" for="example-select">Выберите статус</label>
+                                            <select class="form-control" id="example-select" name="status">
+                                                <option value="1">Онлайн</option>
+                                                <option value="2">Отошел</option>
+                                                <option value="3">Не беспокоить</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mt-3 d-flex flex-row-reverse">
+                                        <button class="btn btn-warning">Set Status</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
         </form>
     </main>
 
-    <script src="js/vendors.bundle.js"></script>
-    <script src="js/app.bundle.js"></script>
+    <script src="../../js/vendors.bundle.js"></script>
+    <script src="../../js/app.bundle.js"></script>
     <script>
 
         $(document).ready(function()

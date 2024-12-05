@@ -101,5 +101,52 @@ class AdminUserController extends UserController
         $db->update($data,$_GET['joinid'],'credentials');
         header('Location: /login');
     }
+    public function showSecurity($id)
+    {
+        $db = new QueryBuilder();
+        $user = $db->findOne($id,'users');
+        echo $this->templates->render('security', ['user' => $user]);
+    }
+    public function updateSecurity()
+    {
+        $db = new QueryBuilder();
+        $data = [
+          'email' => $_POST['email'],
+          'password' => $_POST['password'],
+        ];
+        $db->update($data,$_GET['id'],'users');
+        header('Location: /login');
+    }
+    public function showStatus($id)
+    {
+        $db = new QueryBuilder();
+        $user = $db->findOne($id,'users');
+        echo $this->templates->render('status', ['user' => $user]);
+    }
+    public function updateStatus()
+    {
+        $db = new QueryBuilder();
+        $data = [
+            'status' => $_POST['status'],
+        ];
+        $db->update($data,$_GET['id'],'users');
+        header('Location: /login');
+    }
+    public function showMedia($id)
+    {
+        $db = new QueryBuilder();
+        $user = $db->findOne($id,'users');
+        echo $this->templates->render('status', ['user' => $user]);
+    }
+    public function updateMedia()
+    {
 
+    }
+
+    public function deleteUser($id)
+    {
+        $db = new QueryBuilder();
+        $db->delete($id,'users');
+        header('Location: /login');
+    }
 }
