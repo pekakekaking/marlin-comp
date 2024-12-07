@@ -33,6 +33,7 @@ use \Tamtamchik\SimpleFlash\Flash;
 use function Tamtamchik\SimpleFlash\flash;
 echo flash()->display();
 ?>
+
 <div class="blankpage-form-field">
     <div class="page-logo m-0 w-100 align-items-center justify-content-center rounded border-bottom-left-radius-0 border-bottom-right-radius-0 px-4">
         <a href="javascript:void(0)" class="page-logo-link press-scale-down d-flex align-items-center">
@@ -58,7 +59,7 @@ echo flash()->display();
         </form>
     </div>
     <div class="blankpage-footer text-center">
-        Нет аккаунта? <a href="page_register.php"><strong>Зарегистрироваться</strong>
+        Нет аккаунта? <a href="/show_register"><strong>Зарегистрироваться</strong>
     </div>
 </div>
 <video poster="../../img/backgrounds/clouds.png" id="bgvid" playsinline autoplay muted loop>

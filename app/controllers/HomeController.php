@@ -28,7 +28,7 @@ class HomeController
     {
         $db = new QueryBuilder();
         $users = $db->getAll('users');
-        echo $this->templates->render('page_register', ['users' => $users]);
+        echo $this->templates->render('users', ['users' => $users]);
     }
 
     public function about()

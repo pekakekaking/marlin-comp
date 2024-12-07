@@ -40,8 +40,6 @@ class AdminUserController extends UserController
                 echo '  For emails, consider using the mail(...) function, Symfony Mailer, Swiftmailer, PHPMailer, etc.';
                 echo '  For SMS, consider using a third-party service and a compatible SDK';
                 $this->auth->confirmEmail($selector, $token);
-                header('Location: /login');
-                die();
 
             });
 
@@ -67,7 +65,7 @@ class AdminUserController extends UserController
         $data = [
             'user_id' => $userId,
             'work' => $work,
-            'phone_number' => $phoneNumber,
+            'phone' => $phoneNumber,
             'address' => $address,
             'status' => $status,
             'vk' => $vk,

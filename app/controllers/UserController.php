@@ -27,6 +27,16 @@ class UserController
     {
         echo $this->templates->render('page_login');
     }
+    public function exitLogin()
+    {
+        $this->auth->logOut();
+        $this->auth->destroySession();
+        header('Location: /home');
+    }
+    public function showRegister()
+    {
+        echo $this->templates->render('page_register');
+    }
     public function login()
     {
         try {
@@ -78,22 +88,22 @@ class UserController
         }
         catch (\Delight\Auth\InvalidEmailException $e) {
             flash()->error('Invalid email address');
-            header('Location: /home');
+            header('Location: /show_register');
             die();
         }
         catch (\Delight\Auth\InvalidPasswordException $e) {
             flash()->error('Invalid password');
-            header('Location: /home');
+            header('Location: /show_register');
             die();
         }
         catch (\Delight\Auth\UserAlreadyExistsException $e) {
             flash()->error('User already exists');
-            header('Location: /home');
+            header('Location: /show_register');
             die();
         }
         catch (\Delight\Auth\TooManyRequestsException $e) {
             flash()->error('Too many requests');
-            header('Location: /home');
+            header('Location: /show_register');
             die();
         }
     }
