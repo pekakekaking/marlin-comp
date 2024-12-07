@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Безопаность</title>
     <meta name="description" content="Chartist.html">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no, minimal-ui">
@@ -40,50 +40,44 @@
 <main id="js-page-content" role="main" class="page-content mt-3">
     <div class="subheader">
         <h1 class="subheader-title">
-            <i class='subheader-icon fal fa-plus-circle'></i> Редактировать
+            <i class='subheader-icon fal fa-lock'></i> Безопасность
         </h1>
 
     </div>
-    <form action="/update_user?id=<?php echo $user['id']?>&joinid=<?php echo $user['join.id']?>" method="POST">
+    <form action="/update_security?id=<?php echo $user['id']?>" method="POST">
         <div class="row">
             <div class="col-xl-6">
                 <div id="panel-1" class="panel">
                     <div class="panel-container">
                         <div class="panel-hdr">
-                            <h2>Общая информация</h2>
+                            <h2>Обновление эл. адреса и пароля</h2>
                         </div>
                         <div class="panel-content">
-                            <!-- username -->
+                            <!-- email -->
                             <div class="form-group">
-                                <label class="form-label" for="simpleinput">Имя</label>
-                                <input type="text" id="simpleinput" class="form-control"
-                                       value="<?php echo $user['username'] ?>">
+                                <label class="form-label" for="simpleinput">Email</label>
+                                <input type="text" id="simpleinput" name="email" class="form-control" value="<?php echo $user['email']?>">
                             </div>
 
-                            <!-- title -->
+                            <!-- password -->
                             <div class="form-group">
-                                <label class="form-label" for="simpleinput">Место работы</label>
-                                <input type="text" id="simpleinput2" class="form-control"
-                                       value="<?php echo $user['work'] ?>">
+                                <label class="form-label" for="simpleinput2">Пароль</label>
+                                <input type="password" id="simpleinput2" name="password" class="form-control">
                             </div>
 
-                            <!-- tel -->
+                            <!-- password confirmation-->
                             <div class="form-group">
-                                <label class="form-label" for="simpleinput">Номер телефона</label>
-                                <input type="text" id="simpleinput3" class="form-control" value="<?php echo $user['phone_number'] ?>">
+                                <label class="form-label" for="simpleinput3">Подтверждение пароля</label>
+                                <input type="password" id="simpleinput3" name="confirm" class="form-control">
                             </div>
 
-                            <!-- address -->
-                            <div class="form-group">
-                                <label class="form-label" for="simpleinput">Адрес</label>
-                                <input type="text" id="simpleinput4" class="form-control"
-                                       value="<?php echo $user['address'] ?>">
-                            </div>
+
                             <div class="col-md-12 mt-3 d-flex flex-row-reverse">
-                                <button class="btn btn-warning">Редактировать</button>
+                                <button class="btn btn-warning">Изменить</button>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>

@@ -15,7 +15,15 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('POST', '/login', ['App\controllers\AdminUserController', 'login']);
     $r->addRoute('GET', '/create_user', ['App\controllers\AdminUserController', 'createUser']);
     $r->addRoute('POST', '/store_user', ['App\controllers\AdminUserController', 'storeUser']);
-    $r->addRoute('GET', '/show_user', ['App\controllers\AdminUserController', 'showUser']);
+    $r->addRoute('GET', '/edit', ['App\controllers\AdminUserController', 'showUser']);
+    $r->addRoute('POST', '/update_user', ['App\controllers\AdminUserController', 'updateUser']);
+    $r->addRoute('GET', '/security', ['App\controllers\AdminUserController', 'showSecurity']);
+    $r->addRoute('POST', '/update_security', ['App\controllers\AdminUserController', 'updateSecurity']);
+    $r->addRoute('GET', '/status', ['App\controllers\AdminUserController', 'showStatus']);
+    $r->addRoute('POST', '/update_status', ['App\controllers\AdminUserController', 'updateStatus']);
+    $r->addRoute('GET', '/media', ['App\controllers\AdminUserController', 'showMedia']);
+    $r->addRoute('POST', '/update_media', ['App\controllers\AdminUserController', 'updateMedia']);
+    $r->addRoute('GET', '/delete_user', ['App\controllers\AdminUserController', 'deleteUser']);
 
 
     $r->addRoute('GET', '/about', ['App\controllers\HomeController', 'about']);

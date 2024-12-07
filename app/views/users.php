@@ -63,17 +63,17 @@
                                 <a class="dropdown-item" href="/edit?id=1">
                                     <i class="fa fa-edit"></i>
                                     Редактировать</a>
-                                <a class="dropdown-item" href="security.html">
+                                <a class="dropdown-item" href="/security?id=1">
                                     <i class="fa fa-lock"></i>
                                     Безопасность</a>
-                                <a class="dropdown-item" href="status.html">
+                                <a class="dropdown-item" href="/status?id=1">
                                     <i class="fa fa-sun"></i>
                                     Установить статус</a>
-                                <a class="dropdown-item" href="media.html">
+                                <a class="dropdown-item" href="/media?id=1">
                                     <i class="fa fa-camera"></i>
                                     Загрузить аватар
                                 </a>
-                                <a href="#" class="dropdown-item" onclick="return confirm('are you sure?');">
+                                <a href="/delete_user?id=1" class="dropdown-item" onclick="return confirm('are you sure?');">
                                     <i class="fa fa-window-close"></i>
                                     Удалить
                                 </a>
