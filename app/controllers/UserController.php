@@ -17,11 +17,40 @@ class UserController
 {
     protected $auth;
     protected $templates;
+    protected $db;
     public function __construct()
     {
         $this->templates = new Engine('../app/views');
         $db=new PDO("mysql:host=127.0.0.1;dbname=marlin","marlin","marlin");
         $this->auth=new \Delight\Auth\Auth($db);
+    }
+    public function uploadImage($img,$id)
+    {
+
+        $allowedFiletypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        if (!in_array($img["type"], $allowedFiletypes)) {
+            print_r('Можно загружать файлы только в формате: jpg, png');
+            exit;
+        }
+
+        $fileName = $img['name'];
+        $target_dir = __DIR__ . '../../img/demo/avatars/';
+        $target_file = $target_dir . basename($fileName);
+        if (!move_uploaded_file($img['tmp_name'], $target_file)) {
+            print_r('Ошибка при перемещении файла!');
+            exit;
+        }
+
+        $query = "UPDATE credentials SET image='$fileName' WHERE user_id='$id'";
+        $statement = $this->db->prepare($query);
+        $statement->execute();
+    }
+    public function showImage($id)
+    {
+        $showQuery = "SELECT name, image FROM credentials WHERE user_id='$id';";
+        $statement = $this->db->prepare($showQuery);
+        $statement->execute();
+        return $statement->fetchAll(PDO::FETCH_NUM);
     }
     public function showLogin()
     {

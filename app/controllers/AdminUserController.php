@@ -33,6 +33,7 @@ class AdminUserController extends UserController
         $vk = $_POST['vk'];
         $telegram = $_POST['telegram'];
         $instagram = $_POST['instagram'];
+        $img=$_POST['image'];
 
         try {
             $userId = $this->auth->register($email, $password, $username, function ($selector, $token) {
@@ -62,6 +63,7 @@ class AdminUserController extends UserController
             die();
         }
         $db = new QueryBuilder();
+        $this->uploadImage($img,$userId);
         $data = [
             'user_id' => $userId,
             'work' => $work,
@@ -78,13 +80,14 @@ class AdminUserController extends UserController
     public function showUser($id)
     {
         $db = new QueryBuilder();
-        $user = $db->findOneWithRelation($id, 'users', 'credentials', 'user_id');
+        $user = $db->findOne($id,'users');
+        $credentials=$db->findRelation($id,'credentials','user_id');
 //        $name=$user['username'];
 //        $work=$user['work'];
 //        $phoneNumber=$user['phone_number'];
 //        $address=$user['address'];
 
-        echo $this->templates->render('edit', ['user' => $user]);
+        echo $this->templates->render('edit', ['user' => $user, 'credentials' => $credentials]);
     }
 
     public function updateUser()
@@ -97,7 +100,7 @@ class AdminUserController extends UserController
         ];
         $db->update($_POST['username'],$_GET['id'],'users');
         $db->update($data,$_GET['joinid'],'credentials');
-        header('Location: /login');
+        header('Location: /home');
     }
     public function showSecurity($id)
     {
@@ -110,15 +113,26 @@ class AdminUserController extends UserController
         $db = new QueryBuilder();
         $data = [
           'email' => $_POST['email'],
-          'password' => $_POST['password'],
         ];
+
+        try {
+            $this->auth->admin()->changePasswordForUserById($_GET['id'], $_POST['password']);
+        }
+        catch (\Delight\Auth\UnknownIdException $e) {
+            die('Unknown ID');
+        }
+        catch (\Delight\Auth\InvalidPasswordException $e) {
+            die('Invalid password');
+        }
+
+
         $db->update($data,$_GET['id'],'users');
-        header('Location: /login');
+        header('Location: /home');
     }
     public function showStatus($id)
     {
         $db = new QueryBuilder();
-        $user = $db->findOne($id,'users');
+        $user = $db->findRelation($id,'credentials','user_id');
         echo $this->templates->render('status', ['user' => $user]);
     }
     public function updateStatus()
@@ -127,24 +141,27 @@ class AdminUserController extends UserController
         $data = [
             'status' => $_POST['status'],
         ];
-        $db->update($data,$_GET['id'],'users');
-        header('Location: /login');
+        $db->update($data,$_GET['id'],'credentials');
+        header('Location: /home');
     }
     public function showMedia($id)
     {
         $db = new QueryBuilder();
-        $user = $db->findOne($id,'users');
+        $user = $db->findRelation($id,'credentials','user_id');
         echo $this->templates->render('status', ['user' => $user]);
     }
     public function updateMedia()
     {
-
+        $db = new QueryBuilder();
+        $id = $_GET['id'];
+        $this->uploadImage($_POST['image'],$id);
+        header('Location: /home');
     }
 
     public function deleteUser($id)
     {
         $db = new QueryBuilder();
         $db->delete($id,'users');
-        header('Location: /login');
+        header('Location: /home');
     }
 }

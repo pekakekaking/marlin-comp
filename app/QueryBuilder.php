@@ -48,6 +48,7 @@ class QueryBuilder
 
     public function findOne($id, $table)
     {
+        $id=$_GET['id'];
         $select = $this->queryFactory->newSelect();
         $select->cols([
             '*'
@@ -67,17 +68,37 @@ class QueryBuilder
 
     }
 
-    public function findOneWithRelation($id, $table, $joinTable,$foreign_id)
+//    public function findOneWithRelation($id, $table, $joinTable, $foreign_id)
+//    {
+//        $select = $this->queryFactory->newSelect();
+//        $select->cols([
+//            '*'
+//        ])->from($table)->where('id=:id')->join('LEFT', ":join AS join", 'id=join.:foreign_id')
+//            ->bindValues([
+//                'id' => $id,
+//                'join' => $joinTable,
+//                'foreign_id' => $foreign_id
+//            ]);
+//        $sth = $this->pdo->prepare($select->getStatement());
+//        $sth->execute($select->getBindValues());
+//        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+//        return $result;
+//    }
+    public function findRelation($id, $table,$foreign_key)
     {
+        $id=$_GET['id'];
         $select = $this->queryFactory->newSelect();
         $select->cols([
             '*'
-        ])->from($table)->where('id=:id')->bindValue('id', $id)->join('LEFT', ":join AS join", 'id=join.:foreign_id')
-            ->bindValue('join',$joinTable)->bindValue('foreign_id',$foreign_id);
+        ])->from($table)->where(':foreign_key=:id')->bindValues([
+            'id'=> $id,
+            'foreign_key' => $foreign_key,
+        ]);
         $sth = $this->pdo->prepare($select->getStatement());
         $sth->execute($select->getBindValues());
         $result = $sth->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
+
 }
 

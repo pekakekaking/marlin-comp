@@ -12,7 +12,7 @@
 
 
     </div>
-    <form action="/store_user" method="POST">
+    <form action="/store_user" method="POST" enctype="multipart/form-data">
         <div class="row">
             <div class="col-xl-6">
                 <div id="panel-1" class="panel">
@@ -81,7 +81,7 @@
 
                             <div class="form-group">
                                 <label class="form-label" for="example-fileinput">Загрузить аватар</label>
-                                <input type="file" id="example-fileinput" class="form-control-file">
+                                <input type="file" id="example-fileinput" class="form-control-file" name="image">
                             </div>
                         </div>
                     </div>
