@@ -29,20 +29,20 @@
 
                             <!-- title -->
                             <div class="form-group">
-                                <label class="form-label" for="simpleinput">Место работы</label>
+                                <label class="form-label" for="simpleinput2">Место работы</label>
                                 <input type="text" id="simpleinput2" class="form-control"
                                        value="<?php echo $credentials['work'] ?>">
                             </div>
 
                             <!-- tel -->
                             <div class="form-group">
-                                <label class="form-label" for="simpleinput">Номер телефона</label>
+                                <label class="form-label" for="simpleinput3">Номер телефона</label>
                                 <input type="text" id="simpleinput3" class="form-control" value="<?php echo $credentials['phone'] ?>">
                             </div>
 
                             <!-- address -->
                             <div class="form-group">
-                                <label class="form-label" for="simpleinput">Адрес</label>
+                                <label class="form-label" for="simpleinput4">Адрес</label>
                                 <input type="text" id="simpleinput4" class="form-control"
                                        value="<?php echo $credentials['address'] ?>">
                             </div>
