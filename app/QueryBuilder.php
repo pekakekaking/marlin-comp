@@ -48,7 +48,7 @@ class QueryBuilder
 
     public function findOne($id, $table)
     {
-        $id=$_GET['id'];
+        if (isset($_GET['id'])) {$id=$_GET['id'];}
         $select = $this->queryFactory->newSelect();
         $select->cols([
             '*'
@@ -61,6 +61,7 @@ class QueryBuilder
 
     public function delete($id, $table)
     {
+        if (isset($_GET['id'])) {$id=$_GET['id'];}
         $delete = $this->queryFactory->newDelete();
         $delete->from($table)->where('id=:id')->bindValue('id', $id);
         $sth = $this->pdo->prepare($delete->getStatement());
@@ -86,18 +87,47 @@ class QueryBuilder
 //    }
     public function findRelation($id, $table,$foreign_key)
     {
-        $id=$_GET['id'];
+        if (isset($_GET['id'])) {$id=$_GET['id'];}
         $select = $this->queryFactory->newSelect();
         $select->cols([
             '*'
-        ])->from($table)->where(':foreign_key=:id')->bindValues([
+        ])->from($table)->where("$foreign_key=:id")->bindValues([
             'id'=> $id,
-            'foreign_key' => $foreign_key,
         ]);
         $sth = $this->pdo->prepare($select->getStatement());
         $sth->execute($select->getBindValues());
         $result = $sth->fetchAll(PDO::FETCH_ASSOC);
         return $result;
+    }
+    public function uploadImage($img,$id)
+    {
+
+        $allowedFiletypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        if (!in_array($img["type"], $allowedFiletypes)) {
+            print_r('Можно загружать файлы только в формате: jpg, png');
+            exit;
+        }
+
+        $fileName = $img['name'];
+        $target_dir = __DIR__ . '/../img/demo/avatars/';
+        $target_file = $target_dir . basename($fileName);
+        if (!move_uploaded_file($img['tmp_name'], $target_file)) {
+            print_r('Ошибка при перемещении файла!');
+            exit;
+        }
+
+        $update = $this->queryFactory->newUpdate();
+        $update->table('credentials')->cols(['image'=>$fileName])->where('user_id=:id')->bindValue('id', $id);
+        $sth = $this->pdo->prepare($update->getStatement());
+        $sth->execute($update->getBindValues());
+
+
+
+//
+//        $query = "UPDATE credentials SET image='$fileName' WHERE user_id='$id'";
+//
+//        $statement = $this->db->prepare($query);
+//        $statement->execute();
     }
 
 }

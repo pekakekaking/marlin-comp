@@ -33,7 +33,7 @@ class AdminUserController extends UserController
         $vk = $_POST['vk'];
         $telegram = $_POST['telegram'];
         $instagram = $_POST['instagram'];
-        $img=$_POST['image'];
+        $img=$_FILES['image'];
 
         try {
             $userId = $this->auth->register($email, $password, $username, function ($selector, $token) {
@@ -63,7 +63,7 @@ class AdminUserController extends UserController
             die();
         }
         $db = new QueryBuilder();
-        $this->uploadImage($img,$userId);
+
         $data = [
             'user_id' => $userId,
             'work' => $work,
@@ -75,6 +75,7 @@ class AdminUserController extends UserController
             'instagram' => $instagram
         ];
         $db->insert($data, 'credentials');
+        $db->uploadImage($img,$userId);
     }
 
     public function showUser($id)
@@ -95,10 +96,10 @@ class AdminUserController extends UserController
         $db = new QueryBuilder();
         $data = [
             'work' => $_POST['work'],
-            'phone_number' => $_POST['phone_number'],
+            'phone' => $_POST['phone'],
             'address' => $_POST['address'],
         ];
-        $db->update($_POST['username'],$_GET['id'],'users');
+        $db->update(['username'=>$_POST['username']],$_GET['id'],'users');
         $db->update($data,$_GET['joinid'],'credentials');
         header('Location: /home');
     }
@@ -148,13 +149,13 @@ class AdminUserController extends UserController
     {
         $db = new QueryBuilder();
         $user = $db->findRelation($id,'credentials','user_id');
-        echo $this->templates->render('status', ['user' => $user]);
+        echo $this->templates->render('media', ['user' => $user]);
     }
     public function updateMedia()
     {
         $db = new QueryBuilder();
         $id = $_GET['id'];
-        $this->uploadImage($_POST['image'],$id);
+        $db->uploadImage($_FILES['image'],$id);
         header('Location: /home');
     }
 

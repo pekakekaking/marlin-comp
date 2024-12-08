@@ -11,7 +11,7 @@
         </h1>
 
     </div>
-    <form action="/update_status?id=<?php echo $user['id'] ?>" method="POST">
+    <form action="/update_status?id=<?php echo $user[0]['id'] ?>" method="POST">
         <div class="row">
             <div class="col-xl-6">
                 <div id="panel-1" class="panel">

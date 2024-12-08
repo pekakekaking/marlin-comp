@@ -24,7 +24,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('POST', '/update_security', ['App\controllers\AdminUserController', 'updateSecurity']);
     $r->addRoute('GET', '/status', ['App\controllers\AdminUserController', 'showStatus']);
     $r->addRoute('POST', '/update_status', ['App\controllers\AdminUserController', 'updateStatus']);
-    $r->addRoute('GET', '/media', ['App\controllers\AdminUserController', 'showMedia']);
+    $r->addRoute('GET', '/show_media', ['App\controllers\AdminUserController', 'showMedia']);
     $r->addRoute('POST', '/update_media', ['App\controllers\AdminUserController', 'updateMedia']);
     $r->addRoute('GET', '/delete_user', ['App\controllers\AdminUserController', 'deleteUser']);
 

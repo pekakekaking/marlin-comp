@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php $this->layout('layout',['title'=>'edit']) ?>
+<?php $this->layout('layout', ['title' => 'edit']) ?>
 
 <body>
 
@@ -11,7 +11,8 @@
         </h1>
 
     </div>
-    <form action="/update_user?id=<?php echo $user['id']?>&joinid=<?php echo $credentials['id']?>" method="POST">
+    <form action="/update_user?id=<?php echo $user[0]['id'] ?>&joinid=<?php echo $credentials[0]['id'] ?>"
+          method="POST">
         <div class="row">
             <div class="col-xl-6">
                 <div id="panel-1" class="panel">
@@ -23,28 +24,29 @@
                             <!-- username -->
                             <div class="form-group">
                                 <label class="form-label" for="simpleinput">Имя</label>
-                                <input type="text" id="simpleinput" class="form-control"
-                                       value="<?php echo $user['username'] ?>">
+                                <input type="text" id="simpleinput" class="form-control" name="username"
+                                       value="<?php echo $user[0]['username'] ?>">
                             </div>
 
                             <!-- title -->
                             <div class="form-group">
                                 <label class="form-label" for="simpleinput2">Место работы</label>
-                                <input type="text" id="simpleinput2" class="form-control"
-                                       value="<?php echo $credentials['work'] ?>">
+                                <input type="text" id="simpleinput2" class="form-control" name="work"
+                                       value="<?php echo $credentials[0]['work'] ?>">
                             </div>
 
                             <!-- tel -->
                             <div class="form-group">
                                 <label class="form-label" for="simpleinput3">Номер телефона</label>
-                                <input type="text" id="simpleinput3" class="form-control" value="<?php echo $credentials['phone'] ?>">
+                                <input type="text" id="simpleinput3" class="form-control" name="phone"
+                                       value="<?php echo $credentials[0]['phone'] ?>">
                             </div>
 
                             <!-- address -->
                             <div class="form-group">
                                 <label class="form-label" for="simpleinput4">Адрес</label>
-                                <input type="text" id="simpleinput4" class="form-control"
-                                       value="<?php echo $credentials['address'] ?>">
+                                <input type="text" id="simpleinput4" class="form-control" name="address"
+                                       value="<?php echo $credentials[0]['address'] ?>">
                             </div>
                             <div class="col-md-12 mt-3 d-flex flex-row-reverse">
                                 <button class="btn btn-warning">Редактировать</button>

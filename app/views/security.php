@@ -11,7 +11,7 @@
         </h1>
 
     </div>
-    <form action="/update_security?id=<?php echo $user['id']?>" method="POST">
+    <form action="/update_security?id=<?php echo $user[0]['id']?>" method="POST">
         <div class="row">
             <div class="col-xl-6">
                 <div id="panel-1" class="panel">
@@ -23,7 +23,7 @@
                             <!-- email -->
                             <div class="form-group">
                                 <label class="form-label" for="simpleinput">Email</label>
-                                <input type="text" id="simpleinput" name="email" class="form-control" value="<?php echo $user['email']?>">
+                                <input type="text" id="simpleinput" name="email" class="form-control" value="<?php echo $user[0]['email']?>">
                             </div>
 
                             <!-- password -->

@@ -9,7 +9,7 @@
         </h1>
 
     </div>
-    <form action="/update_media?id=<?php echo $user['user_id']?>" method="POST" enctype="multipart/form-data">
+    <form action="/update_media?id=<?php echo $user[0]['user_id']?>" method="POST" enctype="multipart/form-data">
         <div class="row">
             <div class="col-xl-6">
                 <div id="panel-1" class="panel">
@@ -19,7 +19,7 @@
                         </div>
                         <div class="panel-content">
                             <div class="form-group">
-                                <img src="../../img/demo/avatars/<?php echo $user['image']?>" alt="" class="img-responsive" width="200">
+                                <img src="../../img/demo/avatars/<?php echo $credentials[0]['image']?>" alt="" class="img-responsive" width="200">
                             </div>
 
                             <div class="form-group">

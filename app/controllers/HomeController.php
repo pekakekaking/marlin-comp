@@ -28,7 +28,15 @@ class HomeController
     {
         $db = new QueryBuilder();
         $users = $db->getAll('users');
-        echo $this->templates->render('users', ['users' => $users]);
+        $credentials=[];
+        foreach ($users as $user) {
+            $cred=$db->findRelation($user['id'],'credentials','user_id');
+            $cred[0]['id']=$user['id'];
+            $credentials[]=$cred;
+
+        }
+
+        echo $this->templates->render('users', ['users' => $users,'credentials'=>$credentials]);
     }
 
     public function about()
