@@ -37,7 +37,7 @@ class UserController
     }
     public function showRegister()
     {
-        echo $this->templates->render('page_register');
+        echo $this->templates->render('page_register',['auth'=>$this->auth]);
     }
     public function login()
     {

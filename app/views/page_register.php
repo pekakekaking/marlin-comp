@@ -14,7 +14,7 @@ echo flash()->display();
 //unset($_SESSION['flash_messages']['error'][0]);
 //}
 ?>
-<?php $this->layout('layout',['title'=>'register']) ?>
+<?php $this->layout('layout',['title'=>'register','auth'=>$auth]) ?>
 <body>
 <div class="page-wrapper auth">
     <div class="page-inner bg-brand-gradient">
