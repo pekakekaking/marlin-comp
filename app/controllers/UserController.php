@@ -24,35 +24,7 @@ class UserController
         $db=new PDO("mysql:host=127.0.0.1;dbname=marlin","marlin","marlin");
         $this->auth=new \Delight\Auth\Auth($db);
     }
-    public function uploadImage($img,$id)
-    {
-//
-//        $allowedFiletypes = ['image/jpeg', 'image/png', 'image/jpg'];
-//        if (!in_array($img["type"], $allowedFiletypes)) {
-//            print_r('Можно загружать файлы только в формате: jpg, png');
-//            exit;
-//        }
-//
-//        $fileName = $img['name'];
-//        $target_dir = __DIR__ . '/../../img/demo/avatars/';
-//        $target_file = $target_dir . basename($fileName);
-//        if (!move_uploaded_file($img['tmp_name'], $target_file)) {
-//            print_r('Ошибка при перемещении файла!');
-//            exit;
-//        }
-//
-//        $query = "UPDATE credentials SET image='$fileName' WHERE user_id='$id'";
-//
-//        $statement = $this->db->prepare($query);
-//        $statement->execute();
-    }
-    public function showImage($id)
-    {
-        $showQuery = "SELECT name, image FROM credentials WHERE user_id='$id';";
-        $statement = $this->db->prepare($showQuery);
-        $statement->execute();
-        return $statement->fetchAll(PDO::FETCH_NUM);
-    }
+
     public function showLogin()
     {
         echo $this->templates->render('page_login');
@@ -71,30 +43,31 @@ class UserController
     {
         try {
             $this->auth->login($_POST['email'], $_POST['password']);
-            $qb=new QueryBuilder;
-            $users=$qb->getAll('users');
-//
-//            echo 'User is logged in';
-            echo $this->templates->render('users', ['users' => $users]);
+//            $qb=new QueryBuilder;
+//            $users=$qb->getAll('users');
+////
+////            echo 'User is logged in';
+//            echo $this->templates->render('users', ['users' => $users]);
+            header('Location:/home');
         }
         catch (\Delight\Auth\InvalidEmailException $e) {
             flash()->error('Wrong email address');
-            header('Location: /login');
+            header('Location: /show_login');
             die();
         }
         catch (\Delight\Auth\InvalidPasswordException $e) {
             flash()->error('Wrong password');
-            header('Location: /login');
+            header('Location: /show_login');
             die();
         }
         catch (\Delight\Auth\EmailNotVerifiedException $e) {
             flash()->error('Email not verified');
-            header('Location: /login');
+            header('Location: /show_login');
             die();
         }
         catch (\Delight\Auth\TooManyRequestsException $e) {
             flash()->error('Too many requests');
-            header('Location: /login');
+            header('Location: /show_login');
             die();
         }
     }
@@ -109,12 +82,14 @@ class UserController
                 echo '  For emails, consider using the mail(...) function, Symfony Mailer, Swiftmailer, PHPMailer, etc.';
                 echo '  For SMS, consider using a third-party service and a compatible SDK';
                 $this->auth->confirmEmail($selector, $token);
-                header('Location: /show_login');
-                die();
 
             });
 
             echo 'We have signed up a new user with the ID ' . $userId;
+
+            $db = new QueryBuilder();
+            $db->insert(['user_id' => $userId], 'credentials');
+            header('Location:/show_login');
         }
         catch (\Delight\Auth\InvalidEmailException $e) {
             flash()->error('Invalid email address');

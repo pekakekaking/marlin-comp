@@ -27,9 +27,16 @@
             </li>
         </ul>
         <ul class="navbar-nav ml-auto">
+            <?php if ($auth->isLoggedIn()):?>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><?php echo $auth->getUsername();?></a>
+            </li>
+            <?php endif;?>
+            <?php if (!$auth->isLoggedIn()):?>
             <li class="nav-item">
                 <a class="nav-link" href="/show_login">Войти</a>
             </li>
+            <?php endif;?>
             <li class="nav-item">
                 <a class="nav-link" href="/exit_login">Выйти</a>
             </li>

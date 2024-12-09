@@ -36,7 +36,7 @@ class HomeController
 
         }
 
-        echo $this->templates->render('users', ['users' => $users,'credentials'=>$credentials]);
+        echo $this->templates->render('users', ['users' => $users,'credentials'=>$credentials,'auth'=>$this->auth]);
     }
 
     public function about()
@@ -63,19 +63,6 @@ class HomeController
             die('Too many requests');
         }
 
-//        try {
-//            $total = 10;
-//            throw new AccountBlockedException("Account is blocked");
-//            if ($vars['amount'] > $total) {
-//                throw new NotEnoughCashException("not enough cash");
-//            }
-//
-//        } catch (NotEnoughCashException $exception) {
-//            flash()->error($exception->getMessage());
-//        } catch (AccountBlockedException $exception) {
-//            flash()->error($exception->getMessage());
-//        }
-      //  echo $this->templates->render('about', ['name' => 'Jonathan about page']);
     }
 public function emailVerification()
 {

@@ -18,7 +18,7 @@ class AdminUserController extends UserController
 
     public function createUser()
     {
-        echo $this->templates->render('create_user');
+        echo $this->templates->render('create_user',['auth'=>$this->auth]);
     }
 
     public function storeUser()
@@ -88,7 +88,7 @@ class AdminUserController extends UserController
 //        $phoneNumber=$user['phone_number'];
 //        $address=$user['address'];
 
-        echo $this->templates->render('edit', ['user' => $user, 'credentials' => $credentials]);
+        echo $this->templates->render('edit', ['user' => $user, 'credentials' => $credentials,'auth'=>$this->auth]);
     }
 
     public function updateUser()
@@ -107,7 +107,7 @@ class AdminUserController extends UserController
     {
         $db = new QueryBuilder();
         $user = $db->findOne($id,'users');
-        echo $this->templates->render('security', ['user' => $user]);
+        echo $this->templates->render('security', ['user' => $user,'auth'=>$this->auth]);
     }
     public function updateSecurity()
     {
@@ -134,7 +134,7 @@ class AdminUserController extends UserController
     {
         $db = new QueryBuilder();
         $user = $db->findRelation($id,'credentials','user_id');
-        echo $this->templates->render('status', ['user' => $user]);
+        echo $this->templates->render('status', ['user' => $user,'auth'=>$this->auth]);
     }
     public function updateStatus()
     {
@@ -149,7 +149,7 @@ class AdminUserController extends UserController
     {
         $db = new QueryBuilder();
         $user = $db->findRelation($id,'credentials','user_id');
-        echo $this->templates->render('media', ['user' => $user]);
+        echo $this->templates->render('media', ['user' => $user,'auth'=>$this->auth]);
     }
     public function updateMedia()
     {

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<?php $this->layout('layout', ['title' => 'users']) ?>
+<?php $this->layout('layout', ['title' => 'users','auth'=>$auth]) ?>
 <body>
 
 <main id="js-page-content" role="main" class="page-content mt-3">

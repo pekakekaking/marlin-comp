@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php $this->layout('layout', ['title' => 'status']) ?>
+<?php $this->layout('layout', ['title' => 'status','auth'=>$auth]) ?>
 
 <body>
 
