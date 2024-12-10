@@ -153,7 +153,7 @@ class UserController
                 'phone'=>$faker->phoneNumber(),
                 'address'=>$faker->address(),
                 'status'=>$faker->numberBetween(1,3),
-                'image'=>$faker->image(),
+                'image'=>null,
                 'vk'=>$faker->userName(),
                 'telegram'=>$faker->userName(),
                 'instagram'=>$faker->userName(),

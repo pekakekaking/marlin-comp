@@ -2,11 +2,14 @@
 //
 use \Tamtamchik\SimpleFlash\Flash;
 use function Tamtamchik\SimpleFlash\flash;
+use DI\ContainerBuilder;
 
 if (!session_id()) @session_start();
 
 require "../vendor/autoload.php";
 
+$containerBuilder=new ContainerBuilder;
+$container=$containerBuilder->build();
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
     $r->addRoute('POST', '/createUser', ['App\controllers\AdminUserController', 'store']);
@@ -61,24 +64,12 @@ switch ($routeInfo[0]) {
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
         $controller = new $handler[0];
-        // $engine=new Engine;
-        // $pdo=new PDO;
+        $cont=$container->call($routeInfo[1], $routeInfo[2]);
         call_user_func([$controller, $handler[1]], $vars);
         break;
 }
 
-//if(true) {
-//    flash()->error('Hot!');}
-//echo flash()->display();
-//?>
 
 
-<!---->
-<!---->
-<!--//if($_SERVER['REQUEST_URI']=='/home') {-->
-<!--//    require '../app/controllers/homepage.php';-->
-<!--//}-->
-<!---->
-<!--//use App\QueryBuilder;-->
-<!--//$db=new QueryBuilder();-->
-<!--//d($db);-->
+
+

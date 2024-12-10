@@ -6,6 +6,7 @@ use App\exceptions\AccountBlockedException;
 use App\exceptions\NotEnoughCashException;
 use App\QueryBuilder;
 use Exception;
+use JasonGrimes\Paginator;
 use League\Plates\Engine;
 use PDO;
 use \Tamtamchik\SimpleFlash\Flash;
@@ -27,7 +28,8 @@ class HomeController
     public function index($vars)
     {
         $db = new QueryBuilder();
-        $users = $db->getAll('users');
+        $itemsPerPage = 3;
+        $users = $db->getPage('users',$itemsPerPage);
         $credentials=[];
         foreach ($users as $user) {
             $cred=$db->findRelation($user['id'],'credentials','user_id');
@@ -35,8 +37,18 @@ class HomeController
             $credentials[]=$cred;
 
         }
+        $totalItems=new QueryBuilder();
+        $currentPage = $_GET['page'] ?? 1;
+        $urlPattern='?page=(:num)';
 
-        echo $this->templates->render('users', ['users' => $users,'credentials'=>$credentials,'auth'=>$this->auth]);
+        $paginator=new Paginator(count($totalItems->getAll('users')), $itemsPerPage, $currentPage,$urlPattern);
+
+        echo $this->templates->render('users', [
+            'paginator'=>$paginator,
+            'users' => $users,
+            'credentials'=>$credentials,
+            'auth'=>$this->auth
+        ]);
     }
 
     public function about()

@@ -3,6 +3,7 @@
 namespace App;
 
 use Aura\SqlQuery\QueryFactory;
+use JasonGrimes\Paginator;
 use PDO;
 
 class QueryBuilder
@@ -48,7 +49,9 @@ class QueryBuilder
 
     public function findOne($id, $table)
     {
-        if (isset($_GET['id'])) {$id=$_GET['id'];}
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+        }
         $select = $this->queryFactory->newSelect();
         $select->cols([
             '*'
@@ -61,7 +64,9 @@ class QueryBuilder
 
     public function delete($id, $table)
     {
-        if (isset($_GET['id'])) {$id=$_GET['id'];}
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+        }
         $delete = $this->queryFactory->newDelete();
         $delete->from($table)->where('id=:id')->bindValue('id', $id);
         $sth = $this->pdo->prepare($delete->getStatement());
@@ -85,21 +90,24 @@ class QueryBuilder
 //        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
 //        return $result;
 //    }
-    public function findRelation($id, $table,$foreign_key)
+    public function findRelation($id, $table, $foreign_key)
     {
-        if (isset($_GET['id'])) {$id=$_GET['id'];}
+        if (isset($_GET['id'])) {
+            $id = $_GET['id'];
+        }
         $select = $this->queryFactory->newSelect();
         $select->cols([
             '*'
         ])->from($table)->where("$foreign_key=:id")->bindValues([
-            'id'=> $id,
+            'id' => $id,
         ]);
         $sth = $this->pdo->prepare($select->getStatement());
         $sth->execute($select->getBindValues());
         $result = $sth->fetchAll(PDO::FETCH_ASSOC);
         return $result;
     }
-    public function uploadImage($img,$id)
+
+    public function uploadImage($img, $id)
     {
 
         $allowedFiletypes = ['image/jpeg', 'image/png', 'image/jpg'];
@@ -117,10 +125,9 @@ class QueryBuilder
         }
 
         $update = $this->queryFactory->newUpdate();
-        $update->table('credentials')->cols(['image'=>$fileName])->where('user_id=:id')->bindValue('id', $id);
+        $update->table('credentials')->cols(['image' => $fileName])->where('user_id=:id')->bindValue('id', $id);
         $sth = $this->pdo->prepare($update->getStatement());
         $sth->execute($update->getBindValues());
-
 
 
 //
@@ -128,6 +135,22 @@ class QueryBuilder
 //
 //        $statement = $this->db->prepare($query);
 //        $statement->execute();
+    }
+
+    public function getPage($table,$itemsPerPage)
+    {
+        $currentPage = $_GET['page'] ?? 1;
+
+
+        $select = $this->queryFactory->newSelect();
+        $select->cols([
+            '*'
+        ])->from($table)->setPaging($itemsPerPage)->page($currentPage);
+
+        $sth = $this->pdo->prepare($select->getStatement());
+        $sth->execute($select->getBindValues());
+        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
+        return $select;
     }
 
 }

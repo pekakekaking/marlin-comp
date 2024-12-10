@@ -139,7 +139,9 @@
             <?php endforeach; ?>
         </div>
     </main>
+    <?= $paginator; ?>
 <?php endif; ?>
+
 
 <!-- BEGIN Page Footer -->
 
