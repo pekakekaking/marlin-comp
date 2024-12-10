@@ -5,6 +5,8 @@ if (!session_id()) {
     session_start();
 }
 
+use Aura\SqlQuery\QueryFactory;
+use Faker\Factory;
 use \Tamtamchik\SimpleFlash\Flash;
 use function Tamtamchik\SimpleFlash\flash;
 
@@ -111,5 +113,56 @@ class UserController
             header('Location: /show_register');
             die();
         }
+    }
+    public function factory()
+    {
+        $db=new QueryBuilder();
+
+
+        $pdo = new PDO("mysql:host=127.0.0.1;dbname=marlin", "marlin", "marlin");
+        $queryFactory = new QueryFactory('mysql');
+
+        $faker = Factory::create();
+//        $insert=$queryFactory->newInsert();
+//        $insert->into('users');
+//        for ($i=13;$i<30;$i++) {
+//            $insert->cols([
+//                'email'=>$faker->safeEmail(),
+//                'password'=>$faker->password(),
+//                'username'=>$faker->userName(),
+//                'status'=>0,
+//                'verified'=>1,
+//                'resettable'=>0,
+//                'roles_mask'=>0,
+//                'registered'=>1,
+//                'last_login'=>0,
+//                'force_logout'=>0,
+//            ]);
+//            $insert->addRow();
+////        }
+//
+//        $sth=$pdo->prepare($insert->getStatement());
+//        $sth->execute($insert->getBindValues());
+
+        $insertCred=$queryFactory->newInsert();
+        $insertCred->into('credentials');
+        for ($i=13;$i<80;$i++) {
+            $insertCred->cols([
+                'user_id'=>$i,
+                'work'=>$faker->word(),
+                'phone'=>$faker->phoneNumber(),
+                'address'=>$faker->address(),
+                'status'=>$faker->numberBetween(1,3),
+                'image'=>$faker->image(),
+                'vk'=>$faker->userName(),
+                'telegram'=>$faker->userName(),
+                'instagram'=>$faker->userName(),
+            ]);
+            $insertCred->addRow();
+        }
+
+        $sth=$pdo->prepare($insertCred->getStatement());
+        $sth->execute($insertCred->getBindValues());
+        return 'ok';
     }
 }

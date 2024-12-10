@@ -1,9 +1,10 @@
 <?php
 
+use App\QueryBuilder;
 use Aura\SqlQuery\QueryFactory;
 use Faker\Factory;
 
-$db=new \App\QueryBuilder();
+$db=new QueryBuilder();
 
 
 $pdo = new PDO("mysql:host=127.0.0.1;dbname=marlin", "marlin", "marlin");
@@ -12,7 +13,7 @@ $queryFactory = new QueryFactory('mysql');
 $faker = Factory::create();
 $insert=$queryFactory->newInsert();
 $insert->into('users');
-for ($i=1;$i<30;$i++) {
+for ($i=13;$i<30;$i++) {
     $insert->cols([
         'email'=>$faker->safeEmail(),
         'password'=>$faker->password(),

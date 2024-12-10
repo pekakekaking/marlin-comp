@@ -30,6 +30,7 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
 
 
     $r->addRoute('GET', '/about', ['App\controllers\HomeController', 'about']);
+    $r->addRoute('GET', '/factory', ['App\controllers\UserController', 'factory']);
     $r->addRoute('GET', '/verification', ['App\controllers\HomeController', 'emailVerification']);
     // {id} must be a number (\d+)
     $r->addRoute('GET', '/user/{id:\d+}', ['App\controllers\HomeController', 'index']);
