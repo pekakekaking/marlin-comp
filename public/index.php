@@ -1,5 +1,7 @@
 <?php
 //
+use Aura\SqlQuery\QueryFactory;
+use League\Plates\Engine;
 use \Tamtamchik\SimpleFlash\Flash;
 use function Tamtamchik\SimpleFlash\flash;
 use DI\ContainerBuilder;
@@ -17,9 +19,12 @@ $containerBuilder->addDefinitions([
     PDO::class => function () {
         return new PDO("mysql:host=127.0.0.1;dbname=marlin", "marlin", "marlin");
     },
-    Auth::class => function () {
+    Auth::class => function ($container) {
         return new Auth($container->get('PDO'));
-    }
+    },
+    QueryFactory::class => function () {
+        return new QueryFactory('mysql');
+}
 ]);
 $container = $containerBuilder->build();
 
@@ -75,9 +80,8 @@ switch ($routeInfo[0]) {
     case FastRoute\Dispatcher::FOUND:
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
-        $controller = new $handler[0];
+
         $cont = $container->call($routeInfo[1], $routeInfo[2]);
-        call_user_func([$controller, $handler[1]], $vars);
         break;
 }
 

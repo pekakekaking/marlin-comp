@@ -11,10 +11,10 @@ class QueryBuilder
     private $pdo;
     private $queryFactory;
 
-    public function __construct(PDO $pdo)
+    public function __construct(PDO $pdo,QueryFactory $queryFactory)
     {
         $this->pdo = $pdo;
-        $this->queryFactory = new QueryFactory('mysql');
+        $this->queryFactory = $queryFactory;
     }
 
     public function getAll($table)
@@ -130,11 +130,6 @@ class QueryBuilder
         $sth->execute($update->getBindValues());
 
 
-//
-//        $query = "UPDATE credentials SET image='$fileName' WHERE user_id='$id'";
-//
-//        $statement = $this->db->prepare($query);
-//        $statement->execute();
     }
 
     public function getPage($table,$itemsPerPage)
@@ -149,8 +144,7 @@ class QueryBuilder
 
         $sth = $this->pdo->prepare($select->getStatement());
         $sth->execute($select->getBindValues());
-        $result = $sth->fetchAll(PDO::FETCH_ASSOC);
-        return $select;
+        return $sth->fetchAll(PDO::FETCH_ASSOC);
     }
 
 }

@@ -5,6 +5,7 @@ namespace App\controllers;
 use App\exceptions\AccountBlockedException;
 use App\exceptions\NotEnoughCashException;
 use App\QueryBuilder;
+use Delight\Auth\Auth;
 use Exception;
 use JasonGrimes\Paginator;
 use League\Plates\Engine;
@@ -19,17 +20,16 @@ class HomeController
     private $auth;
     protected $qb;
 
-    public function __construct(QueryBuilder $qb, Engine $engine, \Delight\Auth\Auth $auth)
+    public function __construct(QueryBuilder $qb, Engine $engine, Auth $auth)
     {
         $this->templates = $engine;
-        $db=new PDO("mysql:host=127.0.0.1;dbname=marlin","marlin","marlin");
         $this->auth=$auth;
         $this->qb=$qb;
     }
 
     public function index()
     {
-        $db = new QueryBuilder();
+        $db=$this->qb;
         $itemsPerPage = 3;
         $users = $db->getPage('users',$itemsPerPage);
         $credentials=[];
@@ -39,7 +39,7 @@ class HomeController
             $credentials[]=$cred;
 
         }
-        $totalItems=new QueryBuilder();
+        $totalItems=$this->qb;
         $currentPage = $_GET['page'] ?? 1;
         $urlPattern='?page=(:num)';
 
@@ -120,14 +120,3 @@ public function login()
 }
 
 }
-//
-//$db = new QueryBuilder();
-//$db->update([
-//    'email'=>'newuser2@gmail.com',
-//    'password'=>'5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8'
-//],17,'users');
-
-//$user=$db->findOne(17,'users');
-//var_dump($user);
-
-//$db->delete(17,'users');

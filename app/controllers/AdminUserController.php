@@ -62,7 +62,7 @@ class AdminUserController extends UserController
             header('Location: /create_user');
             die();
         }
-        $db = new QueryBuilder();
+        $db = $this->qb;
 
         $data = [
             'user_id' => $userId,
@@ -78,11 +78,11 @@ class AdminUserController extends UserController
         $db->uploadImage($img,$userId);
     }
 
-    public function showUser($id)
+    public function showUser()
     {
-        $db = new QueryBuilder();
-        $user = $db->findOne($id,'users');
-        $credentials=$db->findRelation($id,'credentials','user_id');
+        $db =$this->qb;
+        $user = $db->findOne($_GET['id'],'users');
+        $credentials=$db->findRelation($_GET['id'],'credentials','user_id');
 //        $name=$user['username'];
 //        $work=$user['work'];
 //        $phoneNumber=$user['phone_number'];
@@ -93,7 +93,7 @@ class AdminUserController extends UserController
 
     public function updateUser()
     {
-        $db = new QueryBuilder();
+        $db = $this->qb;
         $data = [
             'work' => $_POST['work'],
             'phone' => $_POST['phone'],
@@ -103,15 +103,16 @@ class AdminUserController extends UserController
         $db->update($data,$_GET['joinid'],'credentials');
         header('Location: /home');
     }
-    public function showSecurity($id)
+    public function showSecurity()
     {
-        $db = new QueryBuilder();
+        $id=$_GET['id'];
+        $db = $this->qb;
         $user = $db->findOne($id,'users');
         echo $this->templates->render('security', ['user' => $user,'auth'=>$this->auth]);
     }
     public function updateSecurity()
     {
-        $db = new QueryBuilder();
+        $db = $this->qb;
         $data = [
           'email' => $_POST['email'],
         ];
@@ -130,39 +131,39 @@ class AdminUserController extends UserController
         $db->update($data,$_GET['id'],'users');
         header('Location: /home');
     }
-    public function showStatus($id)
+    public function showStatus()
     {
-        $db = new QueryBuilder();
-        $user = $db->findRelation($id,'credentials','user_id');
+        $db = $this->qb;
+        $user = $db->findRelation($_GET['id'],'credentials','user_id');
         echo $this->templates->render('status', ['user' => $user,'auth'=>$this->auth]);
     }
     public function updateStatus()
     {
-        $db = new QueryBuilder();
+        $db = $this->qb;
         $data = [
             'status' => $_POST['status'],
         ];
         $db->update($data,$_GET['id'],'credentials');
         header('Location: /home');
     }
-    public function showMedia($id)
+    public function showMedia()
     {
-        $db = new QueryBuilder();
-        $user = $db->findRelation($id,'credentials','user_id');
+        $db = $this->qb;
+        $user = $db->findRelation($_GET['id'],'credentials','user_id');
         echo $this->templates->render('media', ['user' => $user,'auth'=>$this->auth]);
     }
     public function updateMedia()
     {
-        $db = new QueryBuilder();
+        $db = $this->qb;
         $id = $_GET['id'];
         $db->uploadImage($_FILES['image'],$id);
         header('Location: /home');
     }
 
-    public function deleteUser($id)
+    public function deleteUser()
     {
-        $db = new QueryBuilder();
-        $db->delete($id,'users');
+        $db = $this->qb;
+        $db->delete($_GET['id'],'users');
         header('Location: /home');
     }
 }
