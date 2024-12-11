@@ -17,15 +17,17 @@ class HomeController
 
     private $templates;
     private $auth;
+    protected $qb;
 
-    public function __construct()
+    public function __construct(QueryBuilder $qb, Engine $engine, \Delight\Auth\Auth $auth)
     {
-        $this->templates = new Engine('../app/views');
+        $this->templates = $engine;
         $db=new PDO("mysql:host=127.0.0.1;dbname=marlin","marlin","marlin");
-        $this->auth=new \Delight\Auth\Auth($db);
+        $this->auth=$auth;
+        $this->qb=$qb;
     }
 
-    public function index($vars)
+    public function index()
     {
         $db = new QueryBuilder();
         $itemsPerPage = 3;

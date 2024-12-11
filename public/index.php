@@ -3,13 +3,25 @@
 use \Tamtamchik\SimpleFlash\Flash;
 use function Tamtamchik\SimpleFlash\flash;
 use DI\ContainerBuilder;
+use Delight\Auth\Auth;
 
 if (!session_id()) @session_start();
 
 require "../vendor/autoload.php";
 
-$containerBuilder=new ContainerBuilder;
-$container=$containerBuilder->build();
+$containerBuilder = new ContainerBuilder;
+$containerBuilder->addDefinitions([
+    Engine::class => function () {
+        return new Engine('../app/views');
+    },
+    PDO::class => function () {
+        return new PDO("mysql:host=127.0.0.1;dbname=marlin", "marlin", "marlin");
+    },
+    Auth::class => function () {
+        return new Auth($container->get('PDO'));
+    }
+]);
+$container = $containerBuilder->build();
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
     $r->addRoute('POST', '/createUser', ['App\controllers\AdminUserController', 'store']);
@@ -64,7 +76,7 @@ switch ($routeInfo[0]) {
         $handler = $routeInfo[1];
         $vars = $routeInfo[2];
         $controller = new $handler[0];
-        $cont=$container->call($routeInfo[1], $routeInfo[2]);
+        $cont = $container->call($routeInfo[1], $routeInfo[2]);
         call_user_func([$controller, $handler[1]], $vars);
         break;
 }
